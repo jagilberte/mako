@@ -1,0 +1,35 @@
+version: '3'
+services:
+  postgresql-test:
+    image: 'postgres:latest'
+    container_name: postgresql-test
+    restart: always
+    environment:
+      - POSTGRES_DB=makoTest
+      - POSTGRES_USER=mako
+      - POSTGRES_PASSWORD=mako
+      - PGDATA=/var/lib/postgresql/data/db
+    volumes:
+      - db_data_test:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
+  postgresql-local:
+    image: 'postgres:latest'
+    container_name: postgresql-local
+    restart: always
+    environment:
+      - POSTGRES_DB=mako
+      - POSTGRES_USER=mako
+      - POSTGRES_PASSWORD=mako
+      - PGDATA=/var/lib/postgresql/data/db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    depends_on:
+      - postgresql-test
+
+volumes:
+  db_data:
+  db_data_test:

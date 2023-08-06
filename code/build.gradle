@@ -1,0 +1,144 @@
+buildscript {
+	ext {
+		kotlinVersion = '1.8.0'
+		groovyVersion = '3.0.13'
+		groovySpockVersion = '2.4-M1-groovy-3.0'		
+		springBootVersion = '3.0.2'
+		springVersion = '6.0.0'
+		validationApiVersion = '2.0.1.Final'
+		sl4jVersion = '1.7.25'
+		injectVersion = '1'
+		testLoggerVersion = '1.6.0'
+		hamcrestCoreVersion = '2.2'
+		bytebuddyVersion = '1.12.20'
+		objenesisVersion = '3.3'		
+	}
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven {	url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+		classpath("com.adarshr.test-logger:com.adarshr.test-logger.gradle.plugin:${testLoggerVersion}")
+	}
+}
+
+apply plugin: 'maven-publish'
+apply plugin: 'groovy'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'jacoco'
+apply plugin: 'idea'
+apply plugin: 'com.adarshr.test-logger'
+
+group = 'com.makobrothers.cleanarchitecture'
+rootProject.archivesBaseName = 'commons-domain'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 17
+
+gradle.taskGraph.whenReady { taskGraph ->
+    if (taskGraph.hasTask(buildRelease)) {
+        compileJava.options.debug = false
+    } else if (taskGraph.hasTask(buildDebug)) {
+        compileJava.options.debug = true
+		compileJava.options.debugOptions.debugLevel = "source,lines,vars"
+        project.version = project.version + '-debug'
+    }
+}
+
+task buildRelease(type: GradleBuild, dependsOn: build) {
+}
+
+task buildDebug(type: GradleBuild, dependsOn: build) {
+}
+
+compileKotlin {
+	kotlinOptions.jvmTarget = "17"
+}
+compileTestKotlin {
+	kotlinOptions.jvmTarget = "17"
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+}
+
+sourceSets {
+	main {
+		kotlin {
+			srcDir 'src/main/kotlin'
+		}
+	}
+	test {
+		groovy {
+			srcDir 'src/test/groovy'
+		}
+	}
+}
+
+dependencies {
+	implementation("javax.inject:javax.inject:${injectVersion}")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+	implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+	implementation("javax.validation:validation-api:${validationApiVersion}")
+	implementation("org.slf4j:slf4j-simple:${sl4jVersion}")
+	testImplementation("org.codehaus.groovy:groovy:${groovyVersion}")
+	testImplementation("org.spockframework:spock-core:${groovySpockVersion}")
+	// optional dependencies for using Spock
+	testImplementation("org.hamcrest:hamcrest-core:${hamcrestCoreVersion}") // only necessary if Hamcrest matchers are used
+	testRuntimeOnly("net.bytebuddy:byte-buddy:${bytebuddyVersion}")    		 // allows mocking of classes (in addition to interfaces)
+	testRuntimeOnly("org.objenesis:objenesis:${objenesisVersion}")					 // allows mocking of classes without default constructor (together with CGLIB)
+}
+
+testlogger {
+    // pick a theme - mocha, standard, plain, mocha-parallel, standard-parallel or plain-parallel
+    theme 'mocha'
+    // set to false to disable detailed failure logs
+    showExceptions true
+    // set threshold in milliseconds to highlight slow tests
+    slowThreshold 2000
+    // displays a breakdown of passes, failures and skips along with total duration
+    showSummary true
+    // set to false to hide passed tests
+    showPassed true
+    // set to false to hide skipped tests
+    showSkipped true
+    // set to false to hide failed tests
+    showFailed true
+    // enable to see standard out and error streams inline with the test results
+    showStandardStreams false
+    // set to false to hide passed standard out and error streams
+    showPassedStandardStreams true
+    // set to false to hide skipped standard out and error streams
+    showSkippedStandardStreams true
+    // set to false to hide failed standard out and error streams
+    showFailedStandardStreams true
+}
+
+jacoco {
+	toolVersion = "0.8.3"
+	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = false
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
