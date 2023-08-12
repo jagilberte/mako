@@ -1,2 +1,7 @@
-rootProject.name = 'mako-rrhh-boot'
-include 'mako-shared-bc','mako-rrhh-bc'
+rootProject.name = 'mako-ddd'
+
+include ':shared'
+project(':shared').projectDir = new File('src/shared')
+
+include ':rrhh'
+project(':rrhh').projectDir = new File('src/rrhh')
