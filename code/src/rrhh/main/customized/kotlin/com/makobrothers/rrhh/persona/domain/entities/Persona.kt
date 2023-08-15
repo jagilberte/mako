@@ -1,8 +1,8 @@
 package com.makobrothers.rrhh.persona.domain.entities
 
 import com.fasterxml.jackson.annotation.JsonFormat
-import com.makobrothers.shared.commons.domain.entities.SelfValidating
-import com.makobrothers.shared.commons.dto.model.SqlParametrizable
+import com.makobrothers.shared.domain.entities.SelfValidating
+import com.makobrothers.shared.dto.model.SqlParametrizable
 import java.util.Date
 import jakarta.validation.constraints.*
 import jakarta.validation.Validation

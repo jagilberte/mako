@@ -1,10 +1,10 @@
 package com.makobrothers.rrhh.persona.application
 
-import com.makobrothers.ddd.commons.domain.boundary.MessageCode
+import com.makobrothers.shared.domain.boundary.MessageCode
 
-import com.makobrothers.mako.commons.application.port.output.AdapterFactory
-import com.makobrothers.mako.rrhh.persona.application.port.input.PersonaFindByIdUseCase
-import com.makobrothers.mako.rrhh.persona.application.port.input.PersonaPresenter
+import com.makobrothers.rrhh.commons.application.port.output.AdapterFactory
+import com.makobrothers.rrhh.persona.application.port.input.PersonaFindByIdUseCase
+import com.makobrothers.rrhh.persona.application.port.input.PersonaPresenter
 
 import org.slf4j.LoggerFactory
 import org.springframework.security.access.prepost.PreAuthorize

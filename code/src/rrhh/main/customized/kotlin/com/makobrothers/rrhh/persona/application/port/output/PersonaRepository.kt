@@ -1,6 +1,6 @@
 package com.makobrothers.rrhh.persona.application.port.output
 
-import com.makobrothers.shared.commons.infrastructure.repository.Repository
+import com.makobrothers.shared.infrastructure.repository.Repository
 import com.makobrothers.rrhh.persona.domain.entities.Persona
 import com.makobrothers.rrhh.persona.domain.criteria.PersonaCriteria
 

@@ -1,7 +1,7 @@
 package com.makobrothers.rrhh.persona.infrastructure.input.rsocket
 
-import com.makobrothers.mako.rrhh.persona.application.port.input.*
-import com.makobrothers.mako.rrhh.persona.domain.entities.Persona
+import com.makobrothers.rrhh.persona.application.port.input.*
+import com.makobrothers.rrhh.persona.domain.entities.Persona
 
 import javax.inject.Inject
 import org.springframework.http.ResponseEntity

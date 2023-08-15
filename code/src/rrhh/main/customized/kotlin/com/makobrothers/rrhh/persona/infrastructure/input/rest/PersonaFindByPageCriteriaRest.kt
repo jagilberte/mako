@@ -1,6 +1,6 @@
 package com.makobrothers.rrhh.persona.infrastructure.input.rest
 
-import com.makobrothers.shared.commons.dto.Page
+import com.makobrothers.shared.dto.Page
 
 import com.makobrothers.rrhh.persona.application.port.input.*
 import com.makobrothers.rrhh.persona.domain.entities.Persona

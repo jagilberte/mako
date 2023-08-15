@@ -28,6 +28,8 @@ allprojects {
 		springBootVersion = '3.0.2'
 		springCloudVersion = '2022.0.4'
 		springVersion = '6.0.0'
+		springDocVersion = '1.5.12'
+		myBatisVersion = '3.4.5'
 		validationApiVersion = '2.0.1.Final'
 		jakartaValidationApiVersion = '3.0.0'
 		junitVersion = '4.13.1'
@@ -42,10 +44,15 @@ allprojects {
 	dependencies {
 		// Prod
 		implementation("javax.inject:javax.inject:${injectVersion}")
+		implementation("org.springdoc:springdoc-openapi-ui:${springDocVersion}")
+		implementation("org.springdoc:springdoc-openapi-data-rest:${springDocVersion}")
+		implementation("org.springdoc:springdoc-openapi-kotlin:${springDocVersion}")
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
 		implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
 		implementation("jakarta.validation:jakarta.validation-api:${jakartaValidationApiVersion}")
 		implementation("org.slf4j:slf4j-simple:${sl4jVersion}")
+		implementation("org.mybatis:mybatis:${myBatisVersion}")
+		compileOnly("org.springframework.boot:spring-boot-starter-rsocket")
 		compileOnly("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
 		compileOnly("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
 
@@ -124,7 +131,6 @@ buildscript {
 		springBootGradleVersion = '3.1.2'
 	}
 	repositories {
-		mavenLocal()
 		mavenCentral()
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }

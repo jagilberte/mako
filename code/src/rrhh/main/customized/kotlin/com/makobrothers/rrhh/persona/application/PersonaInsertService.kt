@@ -1,6 +1,6 @@
 package com.makobrothers.rrhh.persona.application
 
-import com.makobrothers.shared.commons.domain.boundary.MessageCode
+import com.makobrothers.shared.domain.boundary.MessageCode
 
 import com.makobrothers.rrhh.commons.application.port.output.AdapterFactory
 import com.makobrothers.rrhh.persona.application.port.input.PersonaInsertUseCase

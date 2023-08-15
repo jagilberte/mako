@@ -1,6 +1,6 @@
-package com.makobrothers.mako.rrhh.persona.application.port.input
+package com.makobrothers.rrhh.persona.application.port.input
 
-import com.makobrothers.shared.commons.dto.criteria.BaseCriteria
+import com.makobrothers.shared.dto.criteria.BaseCriteria
 import com.makobrothers.rrhh.persona.domain.criteria.PersonaCriteria
 import com.makobrothers.rrhh.persona.domain.entities.*
 import java.util.*

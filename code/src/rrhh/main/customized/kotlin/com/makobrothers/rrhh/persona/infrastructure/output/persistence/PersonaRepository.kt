@@ -1,6 +1,6 @@
 package com.makobrothers.rrhh.persona.infrastructure.output.persistence
 
-import com.makobrothers.shared.commons.infrastructure.repository.impl.RepositoryJdbc
+import com.makobrothers.shared.infrastructure.repository.impl.RepositoryJdbc
 import com.makobrothers.rrhh.persona.application.port.output.PersonaRepository
 import com.makobrothers.rrhh.persona.domain.entities.Persona
 import com.makobrothers.rrhh.persona.domain.criteria.PersonaCriteria

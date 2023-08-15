@@ -1,6 +1,6 @@
 package com.makobrothers.rrhh.persona.infrastructure.output.persistence
 
-import com.makobrothers.shared.commons.infrastructure.jdbc.Query
+import com.makobrothers.shared.infrastructure.jdbc.Query
 import com.makobrothers.rrhh.persona.domain.criteria.PersonaCriteria
 import org.apache.commons.lang3.StringUtils
 import org.apache.ibatis.jdbc.SQL

@@ -1,6 +1,6 @@
 package com.makobrothers.rrhh.persona.infrastructure.output.persistence
 
-import com.makobrothers.shared.commons.dto.mapper.MapperRes
+import com.makobrothers.shared.dto.mapper.MapperRes
 import com.makobrothers.rrhh.persona.domain.entities.Persona
 import org.springframework.jdbc.core.RowMapper
 import java.sql.*

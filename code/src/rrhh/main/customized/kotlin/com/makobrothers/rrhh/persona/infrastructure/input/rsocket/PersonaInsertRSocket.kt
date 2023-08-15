@@ -1,6 +1,6 @@
 package com.makobrothers.rrhh.persona.infrastructure.input.rsocket
 
-import com.makobrothers.shared.commons.domain.boundary.provide.RESTResponseModel
+import com.makobrothers.shared.domain.boundary.provide.RESTResponseModel
 import com.makobrothers.rrhh.persona.application.port.input.*
 import com.makobrothers.rrhh.persona.domain.entities.Persona
 

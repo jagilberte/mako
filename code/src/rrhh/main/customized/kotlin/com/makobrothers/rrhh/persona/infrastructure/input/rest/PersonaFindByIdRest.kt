@@ -1,7 +1,7 @@
-package com.makobrothers.mako.rrhh.persona.infrastructure.input.rest
+package com.makobrothers.rrhh.persona.infrastructure.input.rest
 
-import com.makobrothers.mako.rrhh.persona.application.port.input.*
-import com.makobrothers.mako.rrhh.persona.domain.entities.Persona
+import com.makobrothers.rrhh.persona.application.port.input.*
+import com.makobrothers.rrhh.persona.domain.entities.Persona
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.MediaType

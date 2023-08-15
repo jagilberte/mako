@@ -1,7 +1,7 @@
 package com.makobrothers.rrhh.persona.domain.criteria
 
-import com.makobrothers.shared.commons.dto.criteria.BaseCriteria
-import com.makobrothers.shared.commons.domain.utils.ParametersUtils
+import com.makobrothers.shared.dto.criteria.BaseCriteria
+import com.makobrothers.shared.domain.utils.ParametersUtils
 
 import java.util.*
 
