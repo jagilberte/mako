@@ -4,6 +4,8 @@ allprojects {
 	apply plugin: 'groovy'
 	apply plugin: 'kotlin'
 	apply plugin: 'kotlin-spring'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.springframework.boot'
 	apply plugin: 'jacoco'
 	apply plugin: 'idea'
 	apply plugin: 'com.adarshr.test-logger'
@@ -12,8 +14,11 @@ allprojects {
 	targetCompatibility = 17
 
 	repositories {
+		mavenLocal()
 		mavenCentral()
-		maven { url 'https://repo.spring.io/milestone' }
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven {	url "https://plugins.gradle.org/m2/" }
 	}
 
 	ext {
@@ -21,8 +26,11 @@ allprojects {
 		groovyVersion = '3.0.13'
 		groovySpockVersion = '2.4-M1-groovy-3.0'
 		springBootVersion = '3.0.2'
+		springCloudVersion = '2022.0.4'
 		springVersion = '6.0.0'
 		validationApiVersion = '2.0.1.Final'
+		jakartaValidationApiVersion = '3.0.0'
+		junitVersion = '4.13.1'
 		sl4jVersion = '1.7.25'
 		injectVersion = '1'
 		testLoggerVersion = '1.6.0'
@@ -38,8 +46,6 @@ allprojects {
 		implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
 		implementation("jakarta.validation:jakarta.validation-api:${jakartaValidationApiVersion}")
 		implementation("org.slf4j:slf4j-simple:${sl4jVersion}")
-		implementation("com.makobrothers.cleanarchitecture:commons-domain:${version}")
-		implementation("com.makobrothers.mako:mako-rrhh-domain:${version}")
 		compileOnly("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
 		compileOnly("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
 
@@ -51,12 +57,6 @@ allprojects {
 		testImplementation("org.hamcrest:hamcrest-core:${hamcrestCoreVersion}") // only necessary if Hamcrest matchers are used
 		testRuntimeOnly("net.bytebuddy:byte-buddy:${bytebuddyVersion}")    		// allows mocking of classes (in addition to interfaces)
 		testRuntimeOnly("org.objenesis:objenesis:${objenesisVersion}")			// allows mocking of classes without default constructor (together with CGLIB)
-	}
-
-	dependencyManagement {
-		imports {
-			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-		}
 	}
 
 	test {
@@ -82,25 +82,24 @@ allprojects {
 
 // All subprojects (located in src/*)
 subprojects {
-	group = "com.makobrothers.mako.${rootProject.name}"
+	group = "com.makobrothers.${rootProject.name}"
 
 	sourceSets {
 		main {
-			kotlin { srcDirs = ['main'] }
+			kotlin { srcDirs = ['main/kotlin','main/customized/kotlin','main/generated/kotlin'] }
 			resources { srcDirs = ['main/resources'] }
 		}
 
 		test {
-			kotlin { srcDirs = ['test'] }
+			kotlin { srcDirs = ['test/groovy'] }
 			resources { srcDirs = ['test/resources'] }
 		}
 	}
 
 	dependencies {
-		implementation 'org.springframework.boot:spring-boot-starter-web:2.1.8.RELEASE'
-
+		implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
 		testImplementation rootProject.sourceSets.main.output
-		testImplementation 'org.springframework.boot:spring-boot-starter-test:2.2.1.RELEASE'
+		implementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 
 		if (project.name != "shared") {
 			implementation project(":shared")
@@ -119,38 +118,49 @@ subprojects {
 
 // Main project (located in apps/)
 buildscript {
+	ext {
+		kotlinVersion = '1.8.0'
+		testLoggerVersion = '1.6.0'
+		springBootGradleVersion = '3.1.2'
+	}
 	repositories {
+		mavenLocal()
 		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven {	url "https://plugins.gradle.org/m2/" }
 	}
 	dependencies {
-		classpath('org.springframework.boot:spring-boot-gradle-plugin:2.2.1.RELEASE')
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+		classpath("com.adarshr.test-logger:com.adarshr.test-logger.gradle.plugin:${testLoggerVersion}")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootGradleVersion}")
 	}
 }
 
 sourceSets {
 	main {
-		java { srcDirs = ['apps/main'] }
-		resources { srcDirs = ['apps/main/resources'] }
+		kotlin { srcDirs = ['apps/main/kotlin','apps/main/customized/kotlin','apps/main/generated/kotlin'] }
+		resources { srcDirs = ['apps/main/kotlin/resources'] }
 	}
 
 	test {
-		java { srcDirs = ['apps/test'] }
-		resources { srcDirs = ['apps/test/resources'] }
+		groovy { srcDirs = ['apps/test/groovy'] }
+		resources { srcDirs = ['apps/test/groovy/resources'] }
 	}
 }
 
 bootJar {
-	baseName = 'mako-ddd'
+	//baseName = 'mako-ddd'
 	version = '0.0.1'
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web:2.1.8.RELEASE'
-
+	implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
 	implementation project(":shared")
 	implementation project(":rrhh")
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.1.8.RELEASE'
+	testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 	testImplementation project(":shared").sourceSets.test.output
 }
 
