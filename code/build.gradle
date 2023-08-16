@@ -39,10 +39,13 @@ allprojects {
 		hamcrestCoreVersion = '2.2'
 		bytebuddyVersion = '1.12.20'
 		objenesisVersion = '3.3'
+		reflectionVersion = '0.10.2'
+		guavaVersion = '32.1.2-jre'
 	}
 
 	dependencies {
 		// Prod
+		implementation("com.google.guava:guava:${guavaVersion}")
 		implementation("javax.inject:javax.inject:${injectVersion}")
 		implementation("org.springdoc:springdoc-openapi-ui:${springDocVersion}")
 		implementation("org.springdoc:springdoc-openapi-data-rest:${springDocVersion}")
@@ -52,6 +55,7 @@ allprojects {
 		implementation("jakarta.validation:jakarta.validation-api:${jakartaValidationApiVersion}")
 		implementation("org.slf4j:slf4j-simple:${sl4jVersion}")
 		implementation("org.mybatis:mybatis:${myBatisVersion}")
+		implementation("org.reflections:reflections:${reflectionVersion}")
 		compileOnly("org.springframework.boot:spring-boot-starter-rsocket")
 		compileOnly("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
 		compileOnly("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
