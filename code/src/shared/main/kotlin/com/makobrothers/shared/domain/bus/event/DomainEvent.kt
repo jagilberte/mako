@@ -25,9 +25,7 @@ abstract class DomainEvent {
     protected constructor()
 
     abstract fun eventName(): String?
-
     abstract fun toPrimitives(): HashMap<String?, Serializable?>?
-
     abstract fun fromPrimitives(
         aggregateId: String?,
         body: HashMap<String?, Serializable?>?,

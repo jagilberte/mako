@@ -41,6 +41,7 @@ allprojects {
 		objenesisVersion = '3.3'
 		reflectionVersion = '0.10.2'
 		guavaVersion = '32.1.2-jre'
+		kediatRVersion = '3.0.0'
 	}
 
 	dependencies {
@@ -56,6 +57,8 @@ allprojects {
 		implementation("org.slf4j:slf4j-simple:${sl4jVersion}")
 		implementation("org.mybatis:mybatis:${myBatisVersion}")
 		implementation("org.reflections:reflections:${reflectionVersion}")
+		implementation("com.trendyol:kediatr-core:${kediatRVersion}")
+		implementation("com.trendyol:kediatr-spring-starter:${kediatRVersion}")
 		compileOnly("org.springframework.boot:spring-boot-starter-rsocket")
 		compileOnly("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
 		compileOnly("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
