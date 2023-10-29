@@ -1,4 +1,6 @@
-package com.makobrothers.rrhh.persona.infrastructure.output.persistence
+package com.makobrothers.rrhh.persona.infrastructure.persistence
+
+import com.makobrothers.rrhh.persona.infrastructure.output.persistence.PersonaMapperGenerated
 
 /**
  * Clase con los mappers customizados de la entidad Persona.

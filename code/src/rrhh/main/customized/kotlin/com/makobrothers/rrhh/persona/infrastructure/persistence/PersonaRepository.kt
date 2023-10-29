@@ -1,4 +1,4 @@
-package com.makobrothers.rrhh.persona.infrastructure.output.persistence
+package com.makobrothers.rrhh.persona.infrastructure.persistence
 
 import com.makobrothers.shared.infrastructure.repository.impl.RepositoryJdbc
 import com.makobrothers.rrhh.persona.application.port.output.PersonaRepository

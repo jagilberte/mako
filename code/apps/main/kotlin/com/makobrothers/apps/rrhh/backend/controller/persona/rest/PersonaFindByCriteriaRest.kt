@@ -1,6 +1,4 @@
-package com.makobrothers.rrhh.persona.infrastructure.input.rest
-
-import com.makobrothers.shared.dto.Page
+package com.makobrothers.apps.rrhh.backend.controller.persona.rest
 
 import com.makobrothers.rrhh.persona.application.port.input.*
 import com.makobrothers.rrhh.persona.domain.entities.Persona
@@ -16,18 +14,18 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 @RestController
 @SecurityRequirement(name = "basicAuth")
 @RequestMapping("/api/rest/personas", produces = [MediaType.APPLICATION_JSON_VALUE])
-class PersonaFindPageByCriteriaRest(@Inject val service: PersonaFindPageByCriteriaUseCase) {
+class PersonaFindByCriteriaRest(@Inject val service: PersonaFindByCriteriaUseCase) {
 
-    @Operation(summary = "Find personas by a criteria returning paginated result")
+    @Operation(summary = "Find personas by a criteria returning all results")
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Found a list of persona", content = [(Content(mediaType = "application/json", 
             array = (ArraySchema(schema = Schema(implementation = Persona::class)))))])]
     )
-    @GetMapping("/v1/findByPageCriteria")
-    fun findPageByCriteria(personaCriteriaRequestModel: PersonaCriteriaPagedRequestModel): ResponseEntity<Page<Persona>> {
+    @GetMapping("/v1/findByCriteria")
+    fun findByCriteria(personaCriteriaRequestModel: PersonaCriteriaRequestModel): ResponseEntity<List<Persona>> {
         val presenter = PersonaRestPresenter()
-        service.execute(personaCriteriaRequestModel, presenter)        
-        return presenter.generateResponsePage()
+        service.execute(personaCriteriaRequestModel, presenter)
+        return presenter.generateResponseList()
     }
 
 }

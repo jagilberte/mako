@@ -46,54 +46,42 @@ open class PersonaQueryGenerated : Query<PersonaCriteria> {
         return sql.toString().uppercase()
     }
 
-    /**
-     * Método encargado de generar la query de borrado de un objeto de tipo
-     * Persona
-     *
-     * @param criteria Critero de selección de registros.
-     * @return String con la cadena SQL que contiene la query de borrado para los criterios
-     * que se pasaron como parámetros.
-     */
-    override fun toSQLDelete(criteria: PersonaCriteria): String {
-        var sql = SQL()
-        sql.DELETE_FROM("RRHH.PERSONES T0")
-        sql = addWhereClause(sql, criteria)
-        return sql.toString().uppercase()
+    private fun addSelectClause(sql: SQL, isSQLForCount: Boolean = false) : SQL {
+        if (isSQLForCount) {
+            return sql.SELECT("COUNT(1)")
+        }
+        return addSelectClauseAllFields(sql)
     }
 
-    private fun addSelectClause(sql: SQL, isSQLForCount: Boolean = false): SQL {
-        if (isSQLForCount) {
-            sql.SELECT("COUNT(1)")
-        } else {
-            sql.SELECT("T0.ID_PERSONA AS T0ID_PERSONA")
-            sql.SELECT("T0.VERSION AS T0VERSION")
-            sql.SELECT("T0.NOM AS T0NOM")
-            sql.SELECT("T0.PRIMER_COGNOM AS T0PRIMER_COGNOM")
-            sql.SELECT("T0.SEGON_COGNOM AS T0SEGON_COGNOM")
-            sql.SELECT("T0.NIF_NIE AS T0NIF_NIE")
-            sql.SELECT("T0.ALIES AS T0ALIES")
-            sql.SELECT("T0.ADRECA_CE AS T0ADRECA_CE")
-            sql.SELECT("T0.MOBIL_PERSONAL AS T0MOBIL_PERSONAL")
-            sql.SELECT("T0.RESPONSABLE_DIRECTE AS T0RESPONSABLE_DIRECTE")
-            sql.SELECT("T0.DATA_INCORPORACIO AS T0DATA_INCORPORACIO")
-            sql.SELECT("T0.DATA_PREVISTA_FINALITZACIO AS T0DATA_PREVISTA_FINALITZACIO")
-            sql.SELECT("T0.DATA_NAIXEMENT AS T0DATA_NAIXEMENT")
-            sql.SELECT("T0.DATA_BAIXA_EFECTIVA AS T0DATA_BAIXA_EFECTIVA")
-            sql.SELECT("T0.CURRICULUM_VITAE AS T0CURRICULUM_VITAE")
-            sql.SELECT("T0.FOTO AS T0FOTO")
-            sql.SELECT("T0.ES_RESPONSABLE AS T0ES_RESPONSABLE")
-            sql.SELECT("T0.ALTA_A_GID AS T0ALTA_A_GID")
-            sql.SELECT("T0.EMAIL_GID AS T0EMAIL_GID")
-            sql.SELECT("T0.ORGANITZACIO_GID AS T0ORGANITZACIO_GID")
-            sql.SELECT("T0.DEPENDENCIA_GID AS T0DEPENDENCIA_GID")
-            sql.SELECT("T0.IDENTIFICADOR_GID AS T0IDENTIFICADOR_GID")
-            sql.SELECT("T0.GID6 AS T0GID6")
-            sql.SELECT("T0.CREAT_PER AS T0CREAT_PER")
-            sql.SELECT("T0.DATA_CREACIO AS T0DATA_CREACIO")
-            sql.SELECT("T0.MODIFICAT_PER AS T0MODIFICAT_PER")
-            sql.SELECT("T0.DATA_MODIFICACIO AS T0DATA_MODIFICACIO")
-            sql.SELECT("T0.DATA_BAIXA AS T0DATA_BAIXA")
-        }
+    private fun addSelectClauseAllFields(sql: SQL): SQL {
+        sql.SELECT("T0.ID_PERSONA AS T0ID_PERSONA")
+        sql.SELECT("T0.VERSION AS T0VERSION")
+        sql.SELECT("T0.NOM AS T0NOM")
+        sql.SELECT("T0.PRIMER_COGNOM AS T0PRIMER_COGNOM")
+        sql.SELECT("T0.SEGON_COGNOM AS T0SEGON_COGNOM")
+        sql.SELECT("T0.NIF_NIE AS T0NIF_NIE")
+        sql.SELECT("T0.ALIES AS T0ALIES")
+        sql.SELECT("T0.ADRECA_CE AS T0ADRECA_CE")
+        sql.SELECT("T0.MOBIL_PERSONAL AS T0MOBIL_PERSONAL")
+        sql.SELECT("T0.RESPONSABLE_DIRECTE AS T0RESPONSABLE_DIRECTE")
+        sql.SELECT("T0.DATA_INCORPORACIO AS T0DATA_INCORPORACIO")
+        sql.SELECT("T0.DATA_PREVISTA_FINALITZACIO AS T0DATA_PREVISTA_FINALITZACIO")
+        sql.SELECT("T0.DATA_NAIXEMENT AS T0DATA_NAIXEMENT")
+        sql.SELECT("T0.DATA_BAIXA_EFECTIVA AS T0DATA_BAIXA_EFECTIVA")
+        sql.SELECT("T0.CURRICULUM_VITAE AS T0CURRICULUM_VITAE")
+        sql.SELECT("T0.FOTO AS T0FOTO")
+        sql.SELECT("T0.ES_RESPONSABLE AS T0ES_RESPONSABLE")
+        sql.SELECT("T0.ALTA_A_GID AS T0ALTA_A_GID")
+        sql.SELECT("T0.EMAIL_GID AS T0EMAIL_GID")
+        sql.SELECT("T0.ORGANITZACIO_GID AS T0ORGANITZACIO_GID")
+        sql.SELECT("T0.DEPENDENCIA_GID AS T0DEPENDENCIA_GID")
+        sql.SELECT("T0.IDENTIFICADOR_GID AS T0IDENTIFICADOR_GID")
+        sql.SELECT("T0.GID6 AS T0GID6")
+        sql.SELECT("T0.CREAT_PER AS T0CREAT_PER")
+        sql.SELECT("T0.DATA_CREACIO AS T0DATA_CREACIO")
+        sql.SELECT("T0.MODIFICAT_PER AS T0MODIFICAT_PER")
+        sql.SELECT("T0.DATA_MODIFICACIO AS T0DATA_MODIFICACIO")
+        sql.SELECT("T0.DATA_BAIXA AS T0DATA_BAIXA")
         return sql
     }
 
@@ -212,6 +200,7 @@ open class PersonaQueryGenerated : Query<PersonaCriteria> {
         return orderBy.toString()
     }
 
+
     /**
      * Método encargado de generar la query de consulta de 1 registro de un tipo de objeto.
      *
@@ -250,6 +239,21 @@ open class PersonaQueryGenerated : Query<PersonaCriteria> {
      */
     override fun toSQLDeleteById(): String {
         return deleteByIdQuery
+    }
+
+    /**
+     * Método encargado de generar la query de borrado de un objeto de tipo
+     * Persona
+     *
+     * @param criteria Critero de selección de registros.
+     * @return String con la cadena SQL que contiene la query de borrado para los criterios
+     * que se pasaron como parámetros.
+     */
+    override fun toSQLDelete(criteria: PersonaCriteria): String {
+        var sql = SQL()
+        sql.DELETE_FROM("RRHH.PERSONES T0")
+        sql = addWhereClause(sql, criteria)
+        return sql.toString().uppercase()
     }
 
     companion object {

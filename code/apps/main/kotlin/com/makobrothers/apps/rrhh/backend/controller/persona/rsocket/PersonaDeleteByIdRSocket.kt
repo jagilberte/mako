@@ -1,4 +1,4 @@
-package com.makobrothers.rrhh.persona.infrastructure.input.rsocket
+package com.makobrothers.apps.rrhh.backend.controller.persona.rsocket
 
 import com.makobrothers.rrhh.persona.application.port.input.*
 

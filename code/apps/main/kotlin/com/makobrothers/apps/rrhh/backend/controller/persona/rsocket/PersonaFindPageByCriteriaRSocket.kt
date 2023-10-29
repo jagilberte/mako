@@ -1,6 +1,6 @@
-package com.makobrothers.rrhh.persona.infrastructure.input.rsocket
+package com.makobrothers.apps.rrhh.backend.controller.persona.rsocket
 
-import com.makobrothers.shared.domain.boundary.provide.RESTResponseModel
+import com.makobrothers.shared.dto.Page
 import com.makobrothers.rrhh.persona.application.port.input.*
 import com.makobrothers.rrhh.persona.domain.entities.Persona
 
@@ -8,18 +8,19 @@ import javax.inject.Inject
 import org.springframework.http.ResponseEntity
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
+
 import org.slf4j.LoggerFactory
 
 @Controller
 @MessageMapping("persona.")
-class PersonaInsertRSocket(@Inject val service: PersonaInsertUseCase) {
+class PersonaFindPageByCriteriaRSocket(@Inject val service: PersonaFindPageByCriteriaUseCase) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @MessageMapping("v1.insert") 
-    fun insert(personaRequestModel: PersonaRequestModel): ResponseEntity<RESTResponseModel<Persona>> {
+    @MessageMapping("v1.findPageByCriteria")
+    fun findPageByCriteria(personaCriteriaRequestModel: PersonaCriteriaPagedRequestModel): ResponseEntity<Page<Persona>> {
         val presenter = PersonaRSocketPresenter()
-        service.execute(personaRequestModel, presenter)
-        return presenter.generateResponseWithValidations()
+        service.execute(personaCriteriaRequestModel, presenter)
+        return presenter.generateResponsePage()
     }
 
 }

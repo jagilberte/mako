@@ -1,4 +1,4 @@
-package com.makobrothers.rrhh.persona.infrastructure.input.rest
+package com.makobrothers.apps.rrhh.backend.controller.persona.rest
 
 import com.makobrothers.shared.domain.boundary.provide.RESTResponseModel
 
@@ -16,16 +16,16 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 @RestController
 @SecurityRequirement(name = "basicAuth")
 @RequestMapping("/api/rest/personas", produces = [MediaType.APPLICATION_JSON_VALUE])
-class PersonaInsertRest(@Inject val service: PersonaInsertUseCase) {
+class PersonaUpdateRest(@Inject val service: PersonaUpdateUseCase) {
 
-    @Operation(summary = "Create new persona")
+    @Operation(summary = "Update existing persona")
     @ApiResponses(value = [
-        ApiResponse(responseCode = "201", description = "Created new persona", content = [(Content(mediaType = "application/json", 
+        ApiResponse(responseCode = "200", description = "Updated successfully the persona", content = [(Content(mediaType = "application/json", 
             schema = Schema(implementation = Persona::class)))]),
         ApiResponse(responseCode = "406", description = "The are validation errors", content = [Content()])]
     )
-    @PostMapping("/v1")
-    fun insert(@RequestBody personaRequestModel: PersonaRequestModel): ResponseEntity<RESTResponseModel<Persona>> {
+    @PutMapping("/v1")
+    fun update(@RequestBody personaRequestModel: PersonaRequestModel): ResponseEntity<RESTResponseModel<Persona>> {
         val presenter = PersonaRestPresenter()
         service.execute(personaRequestModel, presenter)
         return presenter.generateResponseWithValidations()

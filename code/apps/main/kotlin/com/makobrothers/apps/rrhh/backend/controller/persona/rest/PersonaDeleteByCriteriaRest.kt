@@ -1,4 +1,4 @@
-package com.makobrothers.rrhh.persona.infrastructure.input.rest
+package com.makobrothers.apps.rrhh.backend.controller.persona.rest
 
 import com.makobrothers.rrhh.persona.application.port.input.*
 

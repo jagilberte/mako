@@ -1,24 +1,25 @@
-package com.makobrothers.rrhh.persona.infrastructure.input.rsocket
+package com.makobrothers.apps.rrhh.backend.controller.persona.rsocket
 
 import com.makobrothers.rrhh.persona.application.port.input.*
 import com.makobrothers.rrhh.persona.domain.entities.Persona
 
 import javax.inject.Inject
 import org.springframework.http.ResponseEntity
+import org.springframework.messaging.handler.annotation.DestinationVariable
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 import org.slf4j.LoggerFactory
 
 @Controller
 @MessageMapping("persona.")
-class PersonaFindByCriteriaRSocket(@Inject val service: PersonaFindByCriteriaUseCase) {
+class PersonaFindByIdRSocket(@Inject val service: PersonaFindByIdUseCase) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @MessageMapping("v1.findByCriteria")
-    fun findByCriteria(personaCriteriaRequestModel: PersonaCriteriaRequestModel): ResponseEntity<List<Persona>> {
+    @MessageMapping("v1.findById.{id}")
+    fun findById(@DestinationVariable id: String): ResponseEntity<Persona> {
         val presenter = PersonaRSocketPresenter()
-        service.execute(personaCriteriaRequestModel, presenter)
-        return presenter.generateResponseList()
+        service.execute(id, presenter)
+        return presenter.generateResponse()
     }
 
 }
